@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class InternshipProjectApplication{
-	public static void main(String[] args) {
-		SpringApplication.run(InternshipProjectApplication.class, args);
-	}
-	@GetMapping("/test")
-	public String test(@RequestParam(value = "name", defaultValue = "Success") String name) {
-		return String.format("Test %s", name);
-	}
+public class InternshipProjectApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(InternshipProjectApplication.class, args);
+    }
+
+
 }
