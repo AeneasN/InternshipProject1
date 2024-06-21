@@ -11,4 +11,7 @@ public class ResponseDto {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
+
 }

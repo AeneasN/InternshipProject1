@@ -15,4 +15,8 @@ public class DummyService {
         response.setMessage("My name is DummyService");
         return response;
     }
+
+    public String logItem(String item){
+        return "Logged: " + item;
+    }
 }
