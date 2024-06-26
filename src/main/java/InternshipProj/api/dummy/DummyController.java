@@ -1,11 +1,8 @@
 package InternshipProj.api.dummy;
 
+import InternshipProj.api.dummy.dto.RequestDto;
 import InternshipProj.api.dummy.dto.ResponseDto;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class DummyController {
@@ -27,7 +24,7 @@ public class DummyController {
     }
 
     @PostMapping("/ptest")
-    public String ptest(@RequestBody String item){
-        return dummyService.logItem(item);
+    public String ptest(@RequestBody RequestDto name) {
+        return dummyService.logItem(name);
     }
 }

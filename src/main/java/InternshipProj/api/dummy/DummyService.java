@@ -1,5 +1,6 @@
 package InternshipProj.api.dummy;
 
+import InternshipProj.api.dummy.dto.RequestDto;
 import InternshipProj.api.dummy.dto.ResponseDto;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,8 @@ public class DummyService {
         return response;
     }
 
-    public String logItem(String item){
-        return "Logged: " + item;
+    public String logItem(RequestDto name){
+        return "Logged: " + name;
     }
 }
+
