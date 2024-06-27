@@ -1,19 +1,24 @@
-package InternshipProj.api.dummy.Userid;
+package InternshipProj.api.users;
 
+import InternshipProj.api.user_keys.KeysTable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
-@Table(name = "user_keys")
+@Table(name = "users")
 public class Userid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy="user")
+    private Set<KeysTable> keys;
+
     @NotBlank(message = "Username must not be Null")
-    private String username;
+    private String name;
 
     @NotBlank(message = "Email must not be Null")
     @Email(message = "Email must be valid")
@@ -22,9 +27,9 @@ public class Userid {
 //Default Constructors
     public Userid(){}
 
-    public Userid(Long id, String username, String email) {
+    public Userid(Long id, String name, String email) {
         this.id = id;
-        this.username = username;
+        this.name = name;
         this.email = email;
     }
 
@@ -37,12 +42,12 @@ public class Userid {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public @NotBlank(message = "Username must not be Null") String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(@NotBlank(message = "Username must not be Null") String name) {
+        this.name = name;
     }
 
     public String getEmail() {

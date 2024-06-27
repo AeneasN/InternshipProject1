@@ -1,4 +1,4 @@
-package InternshipProj.api.dummy.Userkeys;
+package InternshipProj.api.user_keys;
 
 public class KeysTableDto {
     private Long id;

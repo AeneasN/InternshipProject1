@@ -1,5 +1,6 @@
-package InternshipProj.api.dummy.Userkeys;
+package InternshipProj.api.user_keys;
 
+import InternshipProj.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,9 @@ public class KeysTableController {
     // Endpoint to get all API keys associated with a specific userId
     @GetMapping("/{userId}")
     public ResponseEntity<List<KeysTable>> getAPIKeysByUserId(@PathVariable Long userId) {
+        if (userId == null) {
+            throw new OrderNotFoundException();
+        }
         List<KeysTable> keysTables = keysTableService.getAPIKeysByUserId(userId);
         return ResponseEntity.ok(keysTables);
     }
@@ -47,5 +51,17 @@ public class KeysTableController {
     public ResponseEntity<KeysTable> createAPIKey(@RequestBody KeysTable keysTable) {
         KeysTable savedKey = keysTableService.saveAPIKey(keysTable);
         return new ResponseEntity<>(savedKey, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/toggle/{keysTableId}")
+    public ResponseEntity<Void> toggleKeyActivation(@PathVariable Long keysTableId) {
+        boolean toggled = keysTableService.toggleKeyActivation(keysTableId);
+        return toggled ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/user/{userId}/status")
+    public ResponseEntity<List<KeysTable>> getAPIKeysByUserIdAndActiveStatus(@PathVariable Long userId, @RequestParam boolean isActive) {
+        List<KeysTable> keysTables = keysTableService.getKeysByActive(userId, isActive);
+        return ResponseEntity.ok(keysTables);
     }
 }

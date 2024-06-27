@@ -1,8 +1,8 @@
 package InternshipProj.api.dummy;
 
-import InternshipProj.api.dummy.Userid.UserIDRepository;
-import InternshipProj.api.dummy.Userid.UserIDService;
-import InternshipProj.api.dummy.Userid.Userid;
+import InternshipProj.api.users.UserIDRepository;
+import InternshipProj.api.users.UserIDService;
+import InternshipProj.api.users.Userid;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +37,7 @@ public class UserIDTests {
         Userid savedUser = userIDService.saveUserID(user1);
 
         assertNotNull(savedUser);
-        assertEquals("user1", savedUser.getUsername());
+        assertEquals("user1", savedUser.getName());
 
         verify(userIDRepository, times(1)).save(user1);
     }

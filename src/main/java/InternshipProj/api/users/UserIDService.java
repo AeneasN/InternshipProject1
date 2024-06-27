@@ -1,11 +1,10 @@
-package InternshipProj.api.dummy.Userid;
+package InternshipProj.api.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserIDService{

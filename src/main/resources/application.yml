@@ -4,9 +4,11 @@ spring:
     username: user-name
     password: strong-password
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: none
       properties:
+        format_sql: true
       hibernate:
       dialect: org.hibernate.dialect.PostgreSQLDialect
   flyway:

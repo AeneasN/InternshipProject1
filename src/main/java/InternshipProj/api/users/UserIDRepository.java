@@ -1,4 +1,4 @@
-package InternshipProj.api.dummy.Userid;
+package InternshipProj.api.users;
 
 import org.springframework.data.repository.CrudRepository;
 

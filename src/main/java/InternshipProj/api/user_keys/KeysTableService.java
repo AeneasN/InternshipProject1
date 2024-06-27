@@ -1,7 +1,7 @@
-package InternshipProj.api.dummy.Userkeys;
+package InternshipProj.api.user_keys;
 
 
-import InternshipProj.api.dummy.Userid.UserIDRepository;
+import InternshipProj.api.users.UserIDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +39,22 @@ public class KeysTableService {
 
     public KeysTable saveAPIKey(KeysTable keysTable) {
         return keysTableRepository.save(keysTable);
+    }
+
+    public boolean toggleKeyActivation(Long keysTableId) {
+        Optional<KeysTable> optionalKey = keysTableRepository.findById(keysTableId);
+        if (optionalKey.isPresent()) {
+            KeysTable key = optionalKey.get();
+            key.setIsActive(!key.getIsActive());
+            keysTableRepository.save(key);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<KeysTable> getKeysByActive(Long userId, boolean isActive) {
+        Integer activeStatus = isActive ? 1 : 0;
+        return keysTableRepository.findByUserIdAndIsActive(userId, activeStatus);
     }
 }
