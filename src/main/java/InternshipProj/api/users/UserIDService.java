@@ -2,6 +2,7 @@ package InternshipProj.api.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,4 +29,17 @@ public class UserIDService{
         }
         return false;
     }
+    @Transactional
+    public boolean checkUsage(Long userId){
+        Userid user = userIDRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+//check if exceeds limit
+        if (user.getUses() >= user.getRequestLimit()){
+            return false;
+        }
+
+        user.setUses(user.getUses() + 1);
+        userIDRepository.save(user);
+        return true;
+    }
+
 }

@@ -2,6 +2,7 @@ package InternshipProj.api.user_keys;
 
 
 import InternshipProj.api.users.UserIDRepository;
+import InternshipProj.api.users.Userid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,23 @@ public class KeysTableService {
     @Autowired
     private UserIDRepository userIDRepository;
 
+    public KeysTable createKey(Userid user, String api) {
+        // Fetch the number of keys the user already has
+        long keyCount = keysTableRepository.countByUser(user);
+
+        // Generate the new key
+        String newKey = String.format("%d.%03d", user.getId(), keyCount + 1);
+
+        // Create the new key entity
+        KeysTable newKeysTable = new KeysTable();
+        newKeysTable.setUser(user);
+        newKeysTable.setApi(api);
+        newKeysTable.setKey(newKey);
+        newKeysTable.setIsActive(true); // Assuming new keys are active by default
+
+        // Save the new key entity to the database
+        return keysTableRepository.save(newKeysTable);
+    }
     public boolean isKeyForAPI(String key, String api) {
         Optional<KeysTable> optionalKeysTable = keysTableRepository.findByKeyAndApi(key, api);
         return optionalKeysTable.isPresent();

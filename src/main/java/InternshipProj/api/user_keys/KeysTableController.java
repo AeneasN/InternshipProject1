@@ -1,5 +1,6 @@
 package InternshipProj.api.user_keys;
 
+import InternshipProj.api.users.Userid;
 import InternshipProj.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ public class KeysTableController {
     private KeysTableService keysTableService;
 
     // Endpoint to check if a key is valid for a specific API
+    @InternshipProj.api.annotations.CheckDailyLimit
     @GetMapping("/check")
     public ResponseEntity<Boolean> isKeyForAPI(@RequestParam String key, @RequestParam String api) {
         boolean result = keysTableService.isKeyForAPI(key, api);
@@ -23,6 +25,7 @@ public class KeysTableController {
     }
 
     // Endpoint to check if a user is registered by their userId
+    @InternshipProj.api.annotations.CheckDailyLimit
     @GetMapping("/user/check")
     public ResponseEntity<Boolean> isUserRegistered(@RequestParam Long userId) {
         boolean result = keysTableService.isUserRegistered(userId);
@@ -31,6 +34,7 @@ public class KeysTableController {
 
     // Endpoint to get all API keys associated with a specific userId
     @GetMapping("/{userId}")
+    @InternshipProj.api.annotations.CheckDailyLimit
     public ResponseEntity<List<KeysTable>> getAPIKeysByUserId(@PathVariable Long userId) {
         if (userId == null) {
             throw new OrderNotFoundException();
@@ -40,6 +44,7 @@ public class KeysTableController {
     }
 
     // Endpoint to delete an API key by its keysTableId
+    @InternshipProj.api.annotations.CheckDailyLimit
     @DeleteMapping("/{keysTableId}")
     public ResponseEntity<Void> deleteAPIKey(@PathVariable Long keysTableId) {
         boolean deleted = keysTableService.deleteAPIKey(keysTableId);
@@ -47,18 +52,20 @@ public class KeysTableController {
     }
 
     // Endpoint to create a new API key
+    @InternshipProj.api.annotations.CheckDailyLimit
     @PostMapping("/create")
-    public ResponseEntity<KeysTable> createAPIKey(@RequestBody KeysTable keysTable) {
-        KeysTable savedKey = keysTableService.saveAPIKey(keysTable);
-        return new ResponseEntity<>(savedKey, HttpStatus.CREATED);
+    public KeysTable createKey(@RequestParam Long userId, @RequestParam String api) {
+        Userid user = new Userid(); // Assume you fetch the user from the database based on userId
+        user.setId(userId);
+        return keysTableService.createKey(user, api);
     }
-
+    @InternshipProj.api.annotations.CheckDailyLimit
     @PutMapping("/toggle/{keysTableId}")
     public ResponseEntity<Void> toggleKeyActivation(@PathVariable Long keysTableId) {
         boolean toggled = keysTableService.toggleKeyActivation(keysTableId);
         return toggled ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
-
+    @InternshipProj.api.annotations.CheckDailyLimit
     @GetMapping("/user/{userId}/status")
     public ResponseEntity<List<KeysTable>> getAPIKeysByUserIdAndActiveStatus(@PathVariable Long userId, @RequestParam boolean isActive) {
         List<KeysTable> keysTables = keysTableService.getKeysByActive(userId, isActive);

@@ -17,12 +17,14 @@ public class UserIDController {
     @Autowired
     private UserIDService userIDService;
 
+    @InternshipProj.api.annotations.CheckDailyLimit
     @GetMapping
     @Operation(description = "Provides List of Users")
     public List<Userid> getAllUserKeys() {
         return userIDService.getAllUserIDs();
     }
 
+    @InternshipProj.api.annotations.CheckDailyLimit
     @PostMapping
     @Operation(description = "Generates User IDs")
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -30,6 +32,7 @@ public class UserIDController {
         return userIDService.saveUserID(userid);
     }
 
+    @InternshipProj.api.annotations.CheckDailyLimit
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.CREATED)
     @Operation(description = "Delete Users")
