@@ -3,7 +3,6 @@ package InternshipProj.api.user_keys;
 import InternshipProj.api.users.Userid;
 import InternshipProj.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,10 +54,9 @@ public class KeysTableController {
     @InternshipProj.api.annotations.CheckDailyLimit
     @PostMapping("/create")
     public KeysTable createKey(@RequestParam Long userId, @RequestParam String api) {
-        Userid user = new Userid(); // Assume you fetch the user from the database based on userId
-        user.setId(userId);
-        return keysTableService.createKey(user, api);
+        return keysTableService.createKey(userId, api);
     }
+
     @InternshipProj.api.annotations.CheckDailyLimit
     @PutMapping("/toggle/{keysTableId}")
     public ResponseEntity<Void> toggleKeyActivation(@PathVariable Long keysTableId) {

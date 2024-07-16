@@ -17,7 +17,8 @@ public class KeysTableService {
     @Autowired
     private UserIDRepository userIDRepository;
 
-    public KeysTable createKey(Userid user, String api) {
+    public KeysTable createKey(long userid, String api) {
+        Userid user = userIDRepository.findById(userid).orElseThrow();
         // Fetch the number of keys the user already has
         long keyCount = keysTableRepository.countByUser(user);
 
@@ -33,6 +34,7 @@ public class KeysTableService {
 
         // Save the new key entity to the database
         return keysTableRepository.save(newKeysTable);
+
     }
     public boolean isKeyForAPI(String key, String api) {
         Optional<KeysTable> optionalKeysTable = keysTableRepository.findByKeyAndApi(key, api);

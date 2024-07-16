@@ -1,24 +1,41 @@
 package InternshipProj.api.spring_security;
 
 import InternshipProj.api.users.UserIDRepository;
-import lombok.RequiredArgsConstructor;
+import io.ipinfo.api.IPinfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Configuration
-@RequiredArgsConstructor
-public class Config {
-    private final UserIDRepository userIDRepository;
+public class ApplicationConfig {
+    @Autowired
+    private UserIDRepository userIDRepository;
+    private static final String ipinfoToken = "300a19e6ae2ffe";
+
+    @Bean
+    public IPinfo iPinfo(){
+        IPinfo iPinfo = new IPinfo.Builder()
+                .setToken(ipinfoToken)
+                .build();
+        return iPinfo;
+    }
+
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return email -> userIDRepository
+        return email -> (UserDetails) userIDRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
@@ -31,8 +48,4 @@ public class Config {
         return authProvider;
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
 }
