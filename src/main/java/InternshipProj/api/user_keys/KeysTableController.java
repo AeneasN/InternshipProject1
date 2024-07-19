@@ -63,6 +63,7 @@ public class KeysTableController {
         boolean toggled = keysTableService.toggleKeyActivation(keysTableId);
         return toggled ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
+
     @InternshipProj.api.annotations.CheckDailyLimit
     @GetMapping("/user/{userId}/status")
     public ResponseEntity<List<KeysTable>> getAPIKeysByUserIdAndActiveStatus(@PathVariable Long userId, @RequestParam boolean isActive) {
