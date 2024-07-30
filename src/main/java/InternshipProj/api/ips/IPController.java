@@ -1,5 +1,7 @@
 package InternshipProj.api.ips;
 
+import InternshipProj.api.dto.CompWeatherResponseDto;
+import InternshipProj.api.dto.WeatherResponseDto;
 import InternshipProj.api.users.UserIDRepository;
 import InternshipProj.api.users.Userid;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +26,11 @@ public class IPController{
         return ipService.getIpLocation(user.orElse(null), clientIp);
     }
 
-
+    @GetMapping("weather")
+    public CompWeatherResponseDto getWeather(@RequestParam Long userId){
+        Optional<Userid> user = userIDRepository.findById(userId);
+        return ipService.getWeatherForUser(user.orElse(null));
+    }
     private Userid getUserById(Long userId) {
         return null;
     }
