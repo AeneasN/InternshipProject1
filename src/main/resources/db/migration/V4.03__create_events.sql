@@ -1,0 +1,6 @@
+ALTER TABLE events
+    ADD COLUMN ip_id INTEGER REFERENCES ips(id) NOT NULL,
+    ADD COLUMN eventCode VARCHAR(100),
+    ADD COLUMN title VARCHAR(255),
+    ADD COLUMN eventDate TIMESTAMP,
+    DROP COLUMN events;

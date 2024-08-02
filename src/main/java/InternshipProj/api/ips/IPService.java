@@ -36,7 +36,7 @@ public class IPService {
             return null;
         }
         String city = response.getCity();
-        String country = response.getCountryName();
+        String country = response.getCountryCode();
         String region = response.getRegion();
 
         IPTable ipTable = new IPTable(user, ipAddress);
@@ -71,7 +71,7 @@ public class IPService {
         String latitude = response.getLatitude();
         String longitude = response.getLongitude();
         String city = response.getCity();
-        String country = response.getCountryName();
+        String country = response.getCountryCode();
 
         String url = METEOMATICS_API_URL
                 .replace("{datetime}", "now")

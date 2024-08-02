@@ -22,7 +22,8 @@ public class IPController{
     @GetMapping("location")
     public IPTable getLocation(HttpServletRequest request, @RequestParam Long userId) {
         Optional<Userid> user = userIDRepository.findById(userId);
-        String clientIp = request.getRemoteAddr();
+        String clientIp = "128.243.80.167";
+//        String clientIp = request.getRemoteAddr();
         return ipService.getIpLocation(user.orElse(null), clientIp);
     }
 
