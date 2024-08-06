@@ -1,19 +1,20 @@
 package InternshipProj.api.dto;
 
+import InternshipProj.api.events.EventsTable;
 import lombok.Data;
 
 @Data
 public class EventResponseDto {
     private String eventName;
     private String date;
-    private String location;
-    private String description;
+    private String category;
+    private String type;
 
-    public void EventRequestDto(String eventName, String date, String location, String description) {
-        this.eventName = eventName;
-        this.date = date;
-        this.location = location;
-        this.description = description;
+    public EventResponseDto(EventsTable event) {
+        this.eventName = event.getTitle();
+        this.date = String.valueOf(event.getEventDate());
+        this.category = event.getCategory();
+        this.type = event.getTag() ? "external" : "user created";
     }
 
 }
