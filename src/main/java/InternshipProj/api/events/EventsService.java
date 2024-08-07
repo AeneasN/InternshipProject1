@@ -32,7 +32,7 @@ public class EventsService {
     @Autowired
     private IPRepository ipRepository;
 
-    private static final String API_KEY = "ZolXMbu5f4ieqmZaqrQKf_qeEdUHLT8AWyr_Ll4R";
+    private static final String API_KEY = "JWH_Zx29TRb44CQxENrvOUKmiAdxjeTJI0BIBEE-";
 
     private String getPlaceId(String city, String country) {
         String url = "https://api.predicthq.com/v1/places?";

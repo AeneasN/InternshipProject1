@@ -1,10 +1,13 @@
-package InternshipProj.api.csv;
+package InternshipProj.api.events;
 
 import InternshipProj.api.dto.EventResponseDto;
-import InternshipProj.api.events.EventCategory;
-import InternshipProj.api.events.EventRadii;
-import InternshipProj.api.events.EventsService;
 import InternshipProj.api.users.Userid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +30,11 @@ public class CSVEventsController {
     @Autowired
     private CSVService csvService;
 
-    @PostMapping("/up")
-    public ResponseEntity<String> uploadCSV(@RequestParam("csv") MultipartFile file) {
+    @PostMapping(value = "/up", consumes = "multipart/form-data")
+    public ResponseEntity<String> uploadCSV(@Parameter(description = "CSV file to upload",
+            content = @Content(mediaType = "multipart/form-data",
+                    schema = @Schema(type = "string", format = "binary")))
+                                                @RequestParam("csv") MultipartFile file) {
         try {
             List<String> errors = csvService.validateCsv(file);
             if (!errors.isEmpty()) {
@@ -67,7 +73,7 @@ public class CSVEventsController {
             csvService.writeDoc(events, writer);
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Failed to generate CSV");
+            return ResponseEntity.status(500).body("csv generation failed");
         }
 
         HttpHeaders headers = new HttpHeaders();

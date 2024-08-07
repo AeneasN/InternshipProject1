@@ -1,7 +1,6 @@
-package InternshipProj.api.csv;
+package InternshipProj.api.events;
 
 import InternshipProj.api.dto.EventResponseDto;
-import InternshipProj.api.events.EventCategory;
 import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,13 +24,14 @@ public class CSVService {
             throw new RuntimeException(e);
         }
     }
+
     public List<String> validateCsv(MultipartFile file) throws IOException {
         List<String> errors = new ArrayList<>();
         try (CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
             List<String[]> records = reader.readAll();
             for (int i = 0; i < records.size(); i++) {
                 String[] record = records.get(i);
-                validateRecord(record, i + 1, errors);
+                errorsList(record, i + 1, errors);
             }
         } catch (CsvException e) {
             errors.add("Error reading CSV file.");
@@ -39,7 +39,8 @@ public class CSVService {
         return errors;
     }
 
-    private void validateRecord(String[] record, int lineNumber, List<String> errors) {
+    private void errorsList(String[] record, int lineNumber, List<String> errors) {
+        //Remove try catch, look for custom objects from open csv, create custom exception, use global handler
         if (record.length != 4) {
             errors.add("Line " + lineNumber + ": Incorrect number of columns.");
             return;
