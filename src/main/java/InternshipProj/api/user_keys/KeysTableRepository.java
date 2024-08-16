@@ -12,5 +12,4 @@ public interface KeysTableRepository extends CrudRepository<KeysTable, Long> {
     List<KeysTable> findByUserId(Long userId);
     List<KeysTable> findByUserIdAndIsActive(@Param("userId") Long userId, @Param("isActive") Integer isActive);
     long countByUser(Userid user);
-
 }

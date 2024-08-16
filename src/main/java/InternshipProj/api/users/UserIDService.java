@@ -69,7 +69,7 @@ public class UserIDService{
     }
 
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private String genCode() {
+    public String genCode() {
         Random random = new Random();
         StringBuilder code = new StringBuilder(3);
         for (int i = 0; i < 3; i++) {

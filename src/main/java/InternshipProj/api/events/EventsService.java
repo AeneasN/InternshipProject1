@@ -32,9 +32,9 @@ public class EventsService {
     @Autowired
     private IPRepository ipRepository;
 
-    private static final String API_KEY = "JWH_Zx29TRb44CQxENrvOUKmiAdxjeTJI0BIBEE-";
+    public static final String API_KEY = "JWH_Zx29TRb44CQxENrvOUKmiAdxjeTJI0BIBEE-";
 
-    private String getPlaceId(String city, String country) {
+    public String getPlaceId(String city, String country) {
         String url = "https://api.predicthq.com/v1/places?";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -65,7 +65,7 @@ public class EventsService {
     }
 
 
-    private List<Map<String, Object>> getEventsFromPlaceId(String placeId, EventRadii radius, EventCategory category, LocalDate startDate, LocalDate endDate) {
+    public List<Map<String, Object>> getEventsFromPlaceId(String placeId, EventRadii radius, EventCategory category, LocalDate startDate, LocalDate endDate) {
         String url = "https://api.predicthq.com/v1/events/";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -146,7 +146,7 @@ public class EventsService {
         }
     }
 
-    private String generateRandomEventCode() {
+    public String generateRandomEventCode() {
         int length = 18;
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();

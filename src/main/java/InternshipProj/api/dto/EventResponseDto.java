@@ -17,4 +17,7 @@ public class EventResponseDto {
         this.type = event.getTag() ? "external" : "user created";
     }
 
+    public EventResponseDto() {
+
+    }
 }

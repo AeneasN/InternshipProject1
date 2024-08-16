@@ -3,13 +3,13 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: user-name
     password: strong-password
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: none
       properties:
         format_sql: true
-      hibernate:
       dialect: org.hibernate.dialect.PostgreSQLDialect
   flyway:
     baseline-on-migrate: true
